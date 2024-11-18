@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_apscheduler',
     'django_celery_beat',
-    'users'
+    'drf_yasg',
+    'users',
+
 ]
 
 MIDDLEWARE = [
