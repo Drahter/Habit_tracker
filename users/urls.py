@@ -1,27 +1,24 @@
-from rest_framework import generics
+from django.urls import path
 
+from users.apps import UsersConfig
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from users.views import UserCreateAPIView, UserDestroyAPIView
 
-class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    permission_classes = (AllowAny,)
+app_name = UsersConfig.name
 
-    def perform_create(self, serializer):
-        user = serializer.save(is_active=True)
-        user.set_password(user.password)
-        user.save()
-
-
-class UserRetrieveAPIView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-
-
-class UserUpdateAPIView(generics.UpdateAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-
-
-class UserDestroyAPIView(generics.DestroyAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
+urlpatterns = [
+    path('login/', TokenObtainPairView.as_view(permission_classes=(AllowAny,)),
+         name='login'),
+    path('token/refresh/',
+         TokenRefreshView.as_view(permission_classes=(AllowAny,)), name='token_refresh'),
+    path('register/', UserCreateAPIView.as_view(),
+         name='register'),
+    path('user/update/<int:pk>/', UserCreateAPIView.as_view(),
+         name='user_update'),
+    path('user/delete/<int:pk>/', UserDestroyAPIView.as_view(),
+         name='user_delete')
+]
