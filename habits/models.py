@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from users.models import User
 
@@ -8,13 +9,13 @@ from users.models import User
 class Habit(models.Model):
     """Модель для хранения информации о привычках"""
     PERIOD = (
-        ('ONE', 'один'),
-        ('TWO', 'два'),
-        ('THREE', 'три'),
-        ('FOUR', 'четыре'),
-        ('FIVE', 'пять'),
-        ('SIX', 'шесть'),
-        ('SEVEN', 'семь'),
+        ('ONE', 1),
+        ('TWO', 2),
+        ('THREE', 3),
+        ('FOUR', 4),
+        ('FIVE', 5),
+        ('SIX', 6),
+        ('SEVEN', 7),
     )
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор привычки')
@@ -40,6 +41,8 @@ class Habit(models.Model):
             raise ValidationError('Привычка может быть или приятной, или иметь связанную приятную.')
         if self.connected and self.reward:
             raise ValidationError('Привычка может иметь или связанную приятную, или награду!')
+        if self.date < timezone.now().date():
+            raise ValidationError('Дата не может быть раньше сегодняшнего дня.')
 
     class Meta:
         verbose_name = 'Привычка'
