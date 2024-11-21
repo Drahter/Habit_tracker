@@ -21,7 +21,8 @@ class Habit(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор привычки')
     place = models.CharField(max_length=100, default='любое место',
                              blank=True, null=True, verbose_name='Место выполнения')
-    date = models.DateField(verbose_name='Время выполнения', blank=True, null=True)
+    date = models.DateField(blank=True, null=True, verbose_name='Дата выполнения привычки')
+    time = models.TimeField(max_length=30, blank=True, null=True, verbose_name='Время выполнения привычки')
     action = models.CharField(max_length=100, verbose_name='Действие')
     is_pleasant = models.BooleanField(default=False, verbose_name='Приятная привычка')
     connected = models.ManyToManyField('self', symmetrical=False, blank=True, null=True)

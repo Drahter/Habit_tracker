@@ -162,9 +162,9 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 CELERY_BEAT_SCHEDULE = {
-    'ban_inactive': {
-        'task': 'study.tasks.ban_inactive',
-        'schedule': timedelta(days=1),
+    'send-habit-notifications': {
+        'task': 'habits.tasks.check_habit_notifications',
+        'schedule': timedelta(seconds=5),
     },
 }
 
