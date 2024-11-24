@@ -9,23 +9,23 @@ from users.models import User
 class Habit(models.Model):
     """Модель для хранения информации о привычках"""
     PERIOD = (
-        ('ONE', 1),
-        ('TWO', 2),
-        ('THREE', 3),
-        ('FOUR', 4),
-        ('FIVE', 5),
-        ('SIX', 6),
-        ('SEVEN', 7),
+        ('1', 1),
+        ('2', 2),
+        ('3', 3),
+        ('4', 4),
+        ('5', 5),
+        ('6', 6),
+        ('7', 7),
     )
 
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор привычки')
+    created_by = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Автор привычки')
     place = models.CharField(max_length=100, default='любое место',
                              blank=True, null=True, verbose_name='Место выполнения')
     date = models.DateField(blank=True, null=True, verbose_name='Дата выполнения привычки')
     time = models.TimeField(max_length=30, blank=True, null=True, verbose_name='Время выполнения привычки')
     action = models.CharField(max_length=100, verbose_name='Действие')
     is_pleasant = models.BooleanField(default=False, verbose_name='Приятная привычка')
-    connected = models.ManyToManyField('self', symmetrical=False, blank=True, null=True)
+    connected = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
     period = models.CharField(max_length=20, choices=PERIOD, default='ONE',
                               blank=True, null=True, verbose_name='периодичность')
     reward = models.CharField(max_length=100, blank=True, null=True, verbose_name='Награда')

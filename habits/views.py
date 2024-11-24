@@ -5,7 +5,7 @@ from habits.paginators import CustomPagination
 from rest_framework import generics
 
 from habits.serializers import HabitSerializer
-from users.permissions import IsOwner, IsPublic
+from users.permissions import IsOwner
 
 
 class HabitListAPIView(generics.ListAPIView):

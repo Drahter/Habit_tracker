@@ -1,7 +1,10 @@
-from django.apps import AppConfig
+from django.contrib import admin
+
+from habits.models import Habit
 
 
-class HabitsConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'habits'
-    verbose_name = 'Привычки'
+@admin.register(Habit)
+class BlogArticleAdmin(admin.ModelAdmin):
+    list_display = (
+    'created_by', 'place', 'date', 'time', 'action', 'is_pleasant', 'period', 'is_public', 'reward',)
+    search_fields = ('created_by', 'place',)
