@@ -14,5 +14,7 @@ def check_habit_notifications():
         if habit.time <= current_time:
             send_notification(habit.created_by.tg_chat_id, habit)
             print(f'Sending notification to {habit.created_by}')
-            habit.date = habit.date + timezone.timedelta(days=int(habit.period))
+            habit.date = habit.date + timezone.timedelta(
+                days=int(habit.period)
+            )
             habit.save()

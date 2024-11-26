@@ -9,7 +9,11 @@ class HabitModelTest(TestCase):
     """Тесты для модели Habit"""
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', email='testuser@test.ru', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='testuser@test.ru',
+            password='testpass'
+        )
 
         Habit.objects.create(
             created_by=self.user,
@@ -25,5 +29,3 @@ class HabitModelTest(TestCase):
         self.assertEqual(habit.action, 'Do something')
         self.assertEqual(habit.created_by, self.user)
         self.assertFalse(habit.is_pleasant)
-
-

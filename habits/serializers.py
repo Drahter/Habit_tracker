@@ -1,7 +1,11 @@
 from rest_framework import serializers
 
 from habits.models import Habit
-from habits.validators import PleasantHabitValidator, ConnectedAndRewardValidator, PleasantHabitNoRewardValidator
+from habits.validators import (
+    PleasantHabitValidator,
+    ConnectedAndRewardValidator,
+    PleasantHabitNoRewardValidator
+)
 
 
 class HabitSerializer(serializers.ModelSerializer):

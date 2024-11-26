@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.utils import timezone
 
-from habits.serializers import HabitSerializer
-from habits.validators import PleasantHabitValidator, ConnectedAndRewardValidator, PleasantHabitNoRewardValidator
+from habits.validators import (PleasantHabitValidator,
+                               ConnectedAndRewardValidator,
+                               PleasantHabitNoRewardValidator)
 from habits.models import Habit
 from users.models import User
 
@@ -11,15 +12,22 @@ class ConnectedAndRewardValidatorTest(TestCase):
 
     def setUp(self):
         self.validator = ConnectedAndRewardValidator()
-        self.user = User.objects.create_user(username='testuser', email='test@test.ru', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@test.ru',
+            password='testpass'
+        )
 
     def test_both_reward_and_connected(self):
         data = {
             'reward': 'TestReward',
             'connected': 1
         }
-        with self.assertRaisesMessage(Exception,
-                                      'Может быть заявлена либо связанная привычка, либо вознаграждение.'):
+        with self.assertRaisesMessage(
+                Exception,
+                'Может быть заявлена либо '
+                'связанная привычка, либо вознаграждение.'
+        ):
             self.validator(data)
 
     def test_only_reward(self):
@@ -46,7 +54,11 @@ class ConnectedAndRewardValidatorTest(TestCase):
 class PleasantHabitValidatorTest(TestCase):
     def setUp(self):
         self.validator = PleasantHabitValidator()
-        self.user = User.objects.create_user(username='testuser', email='test@test.ru', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@test.ru',
+            password='testpass'
+        )
 
         self.pleasant_habit = Habit.objects.create(
             created_by=self.user,
@@ -90,23 +102,32 @@ class PleasantHabitValidatorTest(TestCase):
             'is_pleasant': False
         }
 
-        with self.assertRaisesMessage(Exception,
-                                      'Связанная привычка должна быть приятной.'):
+        with self.assertRaisesMessage(
+                Exception,
+                'Связанная привычка должна быть приятной.'
+        ):
             self.validator(data)
 
 
 class PleasantHabitNoRewardValidatorTest(TestCase):
     def setUp(self):
         self.validator = PleasantHabitNoRewardValidator()
-        self.user = User.objects.create_user(username='testuser', email='test@test.ru', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@test.ru',
+            password='testpass'
+        )
 
     def test_pleasant_and_connected(self):
         data = {
             'is_pleasant': True,
             'connected': 1
         }
-        with self.assertRaisesMessage(Exception,
-                                      'У приятной привычки не может быть вознаграждения или связанной привычки.'):
+        with self.assertRaisesMessage(
+                Exception,
+                'У приятной привычки не может быть '
+                'вознаграждения или связанной привычки.'
+        ):
             self.validator(data)
 
     def test_pleasant_and_reward(self):
@@ -114,6 +135,9 @@ class PleasantHabitNoRewardValidatorTest(TestCase):
             'is_pleasant': True,
             'reward': 'test reward'
         }
-        with self.assertRaisesMessage(Exception,
-                                      'У приятной привычки не может быть вознаграждения или связанной привычки.'):
+        with self.assertRaisesMessage(
+                Exception,
+                'У приятной привычки не может быть '
+                'вознаграждения или связанной привычки.'
+        ):
             self.validator(data)

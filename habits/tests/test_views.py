@@ -97,8 +97,14 @@ class HabitsUpdateTest(APITestCase):
         }
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Habit.objects.get(id=self.habit1.id).action, 'TestAction1Updated')
-        self.assertEqual(Habit.objects.get(id=self.habit1.id).place, 'Place1Updated')
+        self.assertEqual(Habit.objects.get(
+            id=self.habit1.id).action,
+                         'TestAction1Updated'
+                         )
+        self.assertEqual(Habit.objects.get(
+            id=self.habit1.id).place,
+                         'Place1Updated'
+                         )
 
 
 class HabitsDeleteTest(APITestCase):
@@ -125,7 +131,10 @@ class HabitsDeleteTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Habit.objects.count(), 0)
-        self.assertEqual(Habit.objects.filter(id=self.habit1.id).exists(), False)
+        self.assertEqual(Habit.objects.filter(
+            id=self.habit1.id).exists(),
+                         False
+                         )
 
 
 class PublicHabitsListTest(APITestCase):

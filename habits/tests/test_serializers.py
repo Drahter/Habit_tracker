@@ -6,7 +6,10 @@ from users.models import User
 class HabitSerializerTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
 
     def test_valid_data(self):
         data = {
