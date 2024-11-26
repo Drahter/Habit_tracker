@@ -39,7 +39,6 @@ class Habit(models.Model):
     def __str__(self):
         return f'{self.created_by} - {self.action}'
 
-
     class Meta:
         verbose_name = 'Привычка'
         verbose_name_plural = 'Привычки'
