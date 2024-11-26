@@ -80,6 +80,7 @@ class HabitsUpdateTest(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         self.habit1 = Habit.objects.create(
+            created_by=self.user,
             place='Place1',
             time_required=30,
             time=timezone.now().time(),
@@ -118,6 +119,7 @@ class HabitsDeleteTest(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         self.habit1 = Habit.objects.create(
+            created_by=self.user,
             place='Place1',
             time_required=30,
             time=timezone.now().time(),
