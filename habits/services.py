@@ -3,6 +3,7 @@ from config import settings
 
 
 def send_telegram_message(text, chat_id):
+    """Функция для отправки сообщений в ТГ"""
     params = {
         'text': text,
         'chat_id': chat_id,
@@ -14,11 +15,12 @@ def send_telegram_message(text, chat_id):
 
 
 def send_notification(chat_id, habit):
+    """Функция для отправки уведомления о привычках в ТГ"""
     if habit.reward:
         prize = habit.reward
     else:
         prize = habit.connected.action
-    message = (f'Пора вспомнить о своей новой привычке! '
+    message = (f'Пора вспомнить о своей новой привычке!'
                f'Что нужно сделать - {habit.action} в месте '
                f'{habit.place} в {habit.time}! '
                f'На это потребуется {habit.time_required // 60} мин. '

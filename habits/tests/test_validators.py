@@ -9,6 +9,7 @@ from users.models import User
 
 
 class ConnectedAndRewardValidatorTest(TestCase):
+    """Тесты для валидатора ConnectedAndRewardValidator"""
 
     def setUp(self):
         self.validator = ConnectedAndRewardValidator()
@@ -19,6 +20,7 @@ class ConnectedAndRewardValidatorTest(TestCase):
         )
 
     def test_both_reward_and_connected(self):
+        """Проверка передачи данных в оба поля"""
         data = {
             'reward': 'TestReward',
             'connected': 1
@@ -31,6 +33,7 @@ class ConnectedAndRewardValidatorTest(TestCase):
             self.validator(data)
 
     def test_only_reward(self):
+        """Только награда"""
         data = {
             'reward': 'TestReward',
             'connected': None
@@ -41,6 +44,7 @@ class ConnectedAndRewardValidatorTest(TestCase):
             self.fail(f'Validator raised exception unexpectedly: {e}')
 
     def test_only_connected(self):
+        """Только связанная привычка"""
         data = {
             'reward': None,
             'connected': 1
@@ -52,6 +56,8 @@ class ConnectedAndRewardValidatorTest(TestCase):
 
 
 class PleasantHabitValidatorTest(TestCase):
+    """Тесты для валидатора PleasantHabitValidator"""
+
     def setUp(self):
         self.validator = PleasantHabitValidator()
         self.user = User.objects.create_user(
@@ -78,6 +84,8 @@ class PleasantHabitValidatorTest(TestCase):
         )
 
     def test_connected_is_pleasant(self):
+        """Тест с привязыванием приятной привычки"""
+
         data = {
             'connected': self.pleasant_habit.id,
             'action': 'New Habit',
@@ -93,6 +101,7 @@ class PleasantHabitValidatorTest(TestCase):
             self.fail(f'Validator raised exception unexpectedly: {e}')
 
     def test_connected_not_pleasant(self):
+        """Тест с привязыванием нериятной привычки"""
         data = {
             'connected': self.habit.id,
             'action': 'New Habit',
@@ -110,6 +119,7 @@ class PleasantHabitValidatorTest(TestCase):
 
 
 class PleasantHabitNoRewardValidatorTest(TestCase):
+    """Тесты для валидатора PleasantHabitNoRewardValidator"""
     def setUp(self):
         self.validator = PleasantHabitNoRewardValidator()
         self.user = User.objects.create_user(
@@ -119,6 +129,7 @@ class PleasantHabitNoRewardValidatorTest(TestCase):
         )
 
     def test_pleasant_and_connected(self):
+        """Тест на добавление связанной при наличии маркера приятной"""
         data = {
             'is_pleasant': True,
             'connected': 1
@@ -131,6 +142,7 @@ class PleasantHabitNoRewardValidatorTest(TestCase):
             self.validator(data)
 
     def test_pleasant_and_reward(self):
+        """Тест на добавление награды при наличии маркера приятной"""
         data = {
             'is_pleasant': True,
             'reward': 'test reward'

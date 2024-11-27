@@ -4,6 +4,7 @@ from users.models import User
 
 
 class HabitSerializerTest(TestCase):
+    """Тесты сериализатора модели Habit"""
 
     def setUp(self):
         self.user = User.objects.create_user(

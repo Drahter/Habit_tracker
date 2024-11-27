@@ -8,6 +8,7 @@ from users.models import User
 
 
 class HabitsListTest(APITestCase):
+    """Тесты для API-просмотра списка привычек"""
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
@@ -47,6 +48,7 @@ class HabitsListTest(APITestCase):
 
 
 class HabitsCreateTest(APITestCase):
+    """Тесты для API создания новой привычки"""
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
@@ -74,6 +76,7 @@ class HabitsCreateTest(APITestCase):
 
 
 class HabitsUpdateTest(APITestCase):
+    """Тесты для API изменения привычки"""
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
@@ -113,6 +116,7 @@ class HabitsUpdateTest(APITestCase):
 
 
 class HabitsDeleteTest(APITestCase):
+    """Тесты для API удаления привычки"""
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
@@ -144,6 +148,7 @@ class HabitsDeleteTest(APITestCase):
 
 
 class PublicHabitsListTest(APITestCase):
+    """Тесты для API-просмотра списка публичных привычек"""
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(

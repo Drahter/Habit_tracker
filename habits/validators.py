@@ -4,6 +4,7 @@ from habits.models import Habit
 
 
 class PleasantHabitValidator:
+    """Проверка прокрепляемой заявки на наличие маркера приятной"""
     def __call__(self, value):
         connected_id = value.get('connected')
         if connected_id:
@@ -15,6 +16,7 @@ class PleasantHabitValidator:
 
 
 class ConnectedAndRewardValidator:
+    """Проверка, исключающая заполнения награды и связанной привычки"""
     def __call__(self, value):
         if value.get('reward') and value.get('connected'):
             raise serializers.ValidationError(
@@ -24,6 +26,7 @@ class ConnectedAndRewardValidator:
 
 
 class PleasantHabitNoRewardValidator:
+    """Проверка, исключающая назначение награды или связанной привычки у приятной"""
     def __call__(self, value):
         if (value.get('is_pleasant')
                 and (value.get('reward') or value.get('connected'))):
