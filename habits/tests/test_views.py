@@ -18,6 +18,7 @@ class HabitsListTest(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         self.habit1 = Habit.objects.create(
+            created_by=self.user,
             place='Place1',
             time_required=30,
             time=timezone.now().time(),
@@ -25,6 +26,7 @@ class HabitsListTest(APITestCase):
             is_pleasant=False
         )
         self.habit2 = Habit.objects.create(
+            created_by=self.user,
             place='Place2',
             time_required=30,
             time=timezone.now().time(),
@@ -37,9 +39,11 @@ class HabitsListTest(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]['action'], self.habit1.action)
-        self.assertEqual(response.data[1]['action'], self.habit2.action)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0]['action'],
+                         self.habit1.action)
+        self.assertEqual(response.data['results'][1]['action'],
+                         self.habit2.action)
 
 
 class HabitsCreateTest(APITestCase):
@@ -179,6 +183,8 @@ class PublicHabitsListTest(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]['action'], self.habit1.action)
-        self.assertEqual(response.data[1]['action'], self.habit2.action)
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0]['action'],
+                         self.habit1.action)
+        self.assertEqual(response.data['results'][1]['action'],
+                         self.habit2.action)
