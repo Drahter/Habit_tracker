@@ -16,3 +16,4 @@ eventlet==0.38.0
 pytest==8.3.3
 coverage==7.6.8
 pytest-django==4.9.0
+psycopg2-binary==2.9.10
